@@ -1,0 +1,726 @@
+openapi: 3.0.1
+info:
+  title: ILM AVM
+  description: ''
+  contact:
+    name: ILM Group
+    url: https://almatoolbox.visualstudio.com/MOOVA_AFC_CHANNEL/
+  license:
+    name: Unlicense
+    url: https://unlicense.org/
+  version: v1
+paths:
+  /v1/MobilityStatus/produceEventVeichleActivity:
+    post:
+      tags:
+        - MobilityStatus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageVeichleActivity'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/MessageVeichleActivity'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/MessageVeichleActivity'
+        required: true
+      responses:
+        '200':
+          description: Success
+components:
+  schemas:
+    ArrivalStopAssignment:
+      type: object
+      properties:
+        aimedQuayRef:
+          type: string
+          nullable: true
+        aimedQuayName:
+          type: string
+          nullable: true
+        expectedQuayRef:
+          type: string
+          nullable: true
+        expectedQuayName:
+          type: string
+          nullable: true
+        actualQuayRef:
+          type: string
+          nullable: true
+        actualQuayName:
+          type: string
+          nullable: true
+      additionalProperties: false
+    ControlAction:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        lastUpdate:
+          type: string
+          format: date-time
+        status:
+          type: string
+          nullable: true
+        type:
+          type: string
+          nullable: true
+      additionalProperties: false
+    DepartureStopAssignment:
+      type: object
+      properties:
+        aimedQuayRef:
+          type: string
+          nullable: true
+        aimedQuayName:
+          type: string
+          nullable: true
+        expectedQuayRef:
+          type: string
+          nullable: true
+        expectedQuayName:
+          type: string
+          nullable: true
+        actualQuayRef:
+          type: string
+          nullable: true
+        actualQuayName:
+          type: string
+          nullable: true
+      additionalProperties: false
+    Extensions:
+      type: object
+      properties:
+        custom:
+          type: string
+          nullable: true
+        native:
+          $ref: '#/components/schemas/Native'
+      additionalProperties: false
+    FramedVehicleJourneyRef:
+      type: object
+      properties:
+        dataFrameRef:
+          type: string
+          nullable: true
+        datedVehicleJourneyRef:
+          type: string
+          nullable: true
+      additionalProperties: false
+    JourneyPart:
+      type: object
+      properties:
+        journeyPartRef:
+          type: string
+          nullable: true
+        trainNumberRef:
+          type: string
+          nullable: true
+        operatorRef:
+          type: string
+          nullable: true
+      additionalProperties: false
+    MessageVeichleActivity:
+      type: object
+      properties:
+        headers:
+          $ref: '#/components/schemas/MobilityStatusHeaders'
+        payload:
+          $ref: '#/components/schemas/MobilityStatusPayload'
+      additionalProperties: false
+    MobilityStatusHeaders:
+      type: object
+      properties:
+        e2eId:
+          type: string
+          nullable: true
+        source:
+          type: string
+          nullable: true
+        eventType:
+          type: string
+          nullable: true
+        organisation:
+          type: string
+          nullable: true
+        partitionKey:
+          type: string
+          nullable: true
+        recordedAtTime:
+          type: string
+          nullable: true
+      additionalProperties: false
+    MobilityStatusPayload:
+      type: object
+      properties:
+        recordedAtTime:
+          type: string
+          format: date-time
+        itemIdentifier:
+          type: string
+          nullable: true
+        vehicleMonitoringRef:
+          type: string
+          nullable: true
+        vehicleActivityNote:
+          type: string
+          nullable: true
+        validUntilTime:
+          type: string
+          format: date-time
+        progressBetweenStops:
+          $ref: '#/components/schemas/ProgressBetweenStops'
+        monitoredVehicleJourney:
+          $ref: '#/components/schemas/MonitoredVehicleJourney'
+      additionalProperties: false
+    MonitoredCall:
+      type: object
+      properties:
+        stopPointRef:
+          type: string
+          nullable: true
+        visitNumber:
+          type: integer
+          format: int32
+        order:
+          type: integer
+          format: int32
+        stopPointName:
+          type: string
+          nullable: true
+        vehicleAtStop:
+          type: boolean
+        vehicleLocationAtStop:
+          $ref: '#/components/schemas/VehicleLocationAtStop'
+        reversesAtStop:
+          type: boolean
+        platformTraversal:
+          type: boolean
+        timingPoint:
+          type: boolean
+        destinationDisplay:
+          type: string
+          nullable: true
+        callNote:
+          type: string
+          nullable: true
+        aimedArrivalTime:
+          type: string
+          format: date-time
+        actualArrivalTime:
+          type: string
+          format: date-time
+        expectedArrivalTime:
+          type: string
+          format: date-time
+        arrivalStatus:
+          type: string
+          nullable: true
+        arrivalProximityTextRef:
+          type: string
+          nullable: true
+        arrivalProximityTextName:
+          type: string
+          nullable: true
+        arrivalPlatformName:
+          type: string
+          nullable: true
+        arrivalBoardingActivity:
+          type: string
+          nullable: true
+        arrivalStopAssignment:
+          $ref: '#/components/schemas/ArrivalStopAssignment'
+        aimedDepartureTime:
+          type: string
+          format: date-time
+        actualDepartureTime:
+          type: string
+          format: date-time
+        expectedDepartureTime:
+          type: string
+          format: date-time
+        provisionalExpectedDepartureTime:
+          type: string
+          format: date-time
+        earliestExpectedDepartureTime:
+          type: string
+          format: date-time
+        departureStatus:
+          type: string
+          nullable: true
+        departureProximityTextRef:
+          type: string
+          nullable: true
+        departureProximityTextName:
+          type: string
+          nullable: true
+        departurePlatformName:
+          type: string
+          nullable: true
+        departureBoardingActivity:
+          type: string
+          nullable: true
+        departureStopAssignment:
+          $ref: '#/components/schemas/DepartureStopAssignment'
+        aimedHeadwayInterval:
+          type: string
+          nullable: true
+        expectedHeadwayInterval:
+          type: string
+          nullable: true
+        distanceFromStop:
+          type: integer
+          format: int32
+        numberOfStopsAway:
+          type: integer
+          format: int32
+        extensions:
+          $ref: '#/components/schemas/Extensions'
+      additionalProperties: false
+    MonitoredVehicleJourney:
+      type: object
+      properties:
+        lineRef:
+          type: string
+          nullable: true
+        directionRef:
+          type: string
+          nullable: true
+        framedVehicleJourneyRef:
+          $ref: '#/components/schemas/FramedVehicleJourneyRef'
+        journeyPatternRef:
+          type: string
+          nullable: true
+        vehicleModeRef:
+          type: string
+          nullable: true
+        vehicleModeName:
+          type: string
+          nullable: true
+        publishedLineName:
+          type: string
+          nullable: true
+        directionName:
+          type: string
+          nullable: true
+        operatorRef:
+          type: string
+          nullable: true
+        productCategoryRef:
+          type: string
+          nullable: true
+        serviceFeatureRef:
+          type: array
+          items:
+            type: string
+          nullable: true
+        vehicleFeatureRef:
+          type: array
+          items:
+            type: string
+          nullable: true
+        originRef:
+          type: string
+          nullable: true
+        originName:
+          type: string
+          nullable: true
+        via:
+          type: array
+          items:
+            $ref: '#/components/schemas/Vium'
+          nullable: true
+        destinationRef:
+          type: string
+          nullable: true
+        destinationName:
+          type: string
+          nullable: true
+        vehicleJourneyName:
+          type: string
+          nullable: true
+        journeyNote:
+          type: string
+          nullable: true
+        dataSource:
+          type: string
+          nullable: true
+        inCongestion:
+          type: boolean
+        inPanic:
+          type: boolean
+        predictionInaccurate:
+          type: boolean
+        vehicleLocation:
+          $ref: '#/components/schemas/VehicleLocation'
+        locationRecordedAtTime:
+          type: string
+          format: date-time
+        bearing:
+          type: integer
+          format: int32
+        progressRate:
+          type: string
+          nullable: true
+        velocity:
+          type: integer
+          format: int32
+        engineOn:
+          type: boolean
+        occupancy:
+          type: string
+          nullable: true
+        delay:
+          type: string
+          nullable: true
+        vehicleStatus:
+          type: string
+          nullable: true
+        monitored:
+          type: boolean
+        trainNumbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrainNumber'
+          nullable: true
+        journeyParts:
+          type: array
+          items:
+            $ref: '#/components/schemas/JourneyPart'
+          nullable: true
+        previousCalls:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreviousCall'
+          nullable: true
+        monitoredCall:
+          $ref: '#/components/schemas/MonitoredCall'
+        onwardCalls:
+          type: array
+          items:
+            $ref: '#/components/schemas/OnwardCall'
+          nullable: true
+        isCompleteStopSequence:
+          type: boolean
+        extensions:
+          $ref: '#/components/schemas/Extensions'
+      additionalProperties: false
+    Native:
+      type: object
+      properties:
+        departureDelay:
+          type: string
+          nullable: true
+        arrivalDelay:
+          type: string
+          nullable: true
+        departureSource:
+          type: string
+          nullable: true
+        arrivalSource:
+          type: string
+          nullable: true
+        vehicleReady:
+          type: boolean
+        vehicleReadySource:
+          type: string
+          nullable: true
+        vehicleReadyTime:
+          type: string
+          format: date-time
+        stopExtraInfo:
+          $ref: '#/components/schemas/StopExtraInfo'
+        previousLinks:
+          type: array
+          items:
+            type: string
+          nullable: true
+        onwardLinks:
+          type: array
+          items:
+            type: string
+          nullable: true
+        orderedLinks:
+          type: array
+          items:
+            type: string
+          nullable: true
+        routeRef:
+          type: string
+          nullable: true
+        logicalVehicleId:
+          type: string
+          nullable: true
+        vehicleCode:
+          type: string
+          nullable: true
+        registrationNumber:
+          type: string
+          nullable: true
+        controlAction:
+          $ref: '#/components/schemas/ControlAction'
+        vehicleJourneyGroup:
+          $ref: '#/components/schemas/VehicleJourneyGroup'
+        occupancy:
+          $ref: '#/components/schemas/Occupancy'
+      additionalProperties: false
+    Occupancy:
+      type: object
+      properties:
+        recordedAtTime:
+          type: string
+          format: date-time
+        totalCapacity:
+          type: integer
+          format: int32
+        seatingCapacity:
+          type: integer
+          format: int32
+        standingCapacity:
+          type: integer
+          format: int32
+        occupancyPercentage:
+          type: integer
+          format: int32
+        occupancyAllowedPercentage:
+          type: integer
+          format: int32
+        occupancyStatus:
+          type: string
+          nullable: true
+      additionalProperties: false
+    OnwardCall:
+      type: object
+      properties:
+        stopPointRef:
+          type: string
+          nullable: true
+        visitNumber:
+          type: integer
+          format: int32
+        order:
+          type: integer
+          format: int32
+        stopPointName:
+          type: string
+          nullable: true
+        aimedArrivalTime:
+          type: string
+          format: date-time
+        expectedArrivalTime:
+          type: string
+          format: date-time
+        arrivalStatus:
+          type: string
+          nullable: true
+        arrivalProximityTextRef:
+          type: string
+          nullable: true
+        arrivalProximityTextName:
+          type: string
+          nullable: true
+        arrivalPlatformName:
+          type: string
+          nullable: true
+        arrivalBoardingActivity:
+          type: string
+          nullable: true
+        arrivalStopAssignment:
+          $ref: '#/components/schemas/ArrivalStopAssignment'
+        aimedDepartureTime:
+          type: string
+          format: date-time
+        expectedDepartureTime:
+          type: string
+          format: date-time
+        provisionalExpectedDepartureTime:
+          type: string
+          format: date-time
+        earliestExpectedDepartureTime:
+          type: string
+          format: date-time
+        departureStatus:
+          type: string
+          nullable: true
+        departureProximityTextRef:
+          type: string
+          nullable: true
+        departureProximityTextName:
+          type: string
+          nullable: true
+        departurePlatformName:
+          type: string
+          nullable: true
+        departureBoardingActivity:
+          type: string
+          nullable: true
+        departureStopAssignment:
+          $ref: '#/components/schemas/DepartureStopAssignment'
+        aimedHeadwayInterval:
+          type: string
+          nullable: true
+        expectedHeadwayInterval:
+          type: string
+          nullable: true
+        distanceFromStop:
+          type: integer
+          format: int32
+        numberOfStopsAway:
+          type: integer
+          format: int32
+        vehicleAtStop:
+          type: boolean
+        timingPoint:
+          type: boolean
+        extensions:
+          $ref: '#/components/schemas/Extensions'
+      additionalProperties: false
+    PreviousCall:
+      type: object
+      properties:
+        stopPointRef:
+          type: string
+          nullable: true
+        visitNumber:
+          type: integer
+          format: int32
+        order:
+          type: integer
+          format: int32
+        stopPointName:
+          type: string
+          nullable: true
+        aimedArrivalTime:
+          type: string
+          format: date-time
+        actualArrivalTime:
+          type: string
+          format: date-time
+        expectedArrivalTime:
+          type: string
+          format: date-time
+        aimedDepartureTime:
+          type: string
+          format: date-time
+        actualDepartureTime:
+          type: string
+          format: date-time
+        expectedDepartureTime:
+          type: string
+          format: date-time
+        vehicleAtStop:
+          type: boolean
+        extensions:
+          $ref: '#/components/schemas/Extensions'
+      additionalProperties: false
+    ProgressBetweenStops:
+      type: object
+      properties:
+        linkDistance:
+          type: integer
+          format: int32
+        percentage:
+          type: integer
+          format: int32
+      additionalProperties: false
+    StopExtraInfo:
+      type: object
+      properties:
+        recordedAtTime:
+          type: string
+          format: date-time
+        totalCapacity:
+          type: integer
+          format: int32
+        seatingCapacity:
+          type: integer
+          format: int32
+        standingCapacity:
+          type: integer
+          format: int32
+        occupancyPercentage:
+          type: integer
+          format: int32
+        occupancyAllowedPercentage:
+          type: integer
+          format: int32
+        occupancyStatus:
+          type: string
+          nullable: true
+        doorsOpenedTime:
+          type: string
+          format: date-time
+        doorsClosedTime:
+          type: string
+          format: date-time
+        numberOfAlighters:
+          type: integer
+          format: int32
+        numberOfBoarders:
+          type: integer
+          format: int32
+        occupancy:
+          type: boolean
+        numberOfPassengersBefore:
+          type: integer
+          format: int32
+        numberOfPassengersAfter:
+          type: integer
+          format: int32
+      additionalProperties: false
+    TrainNumber:
+      type: object
+      properties:
+        trainNumberRef:
+          type: string
+          nullable: true
+      additionalProperties: false
+    VehicleJourneyGroup:
+      type: object
+      properties:
+        vehicleJourneyGroupRef:
+          type: string
+          nullable: true
+        vehicleJourneyGroupName:
+          type: string
+          nullable: true
+      additionalProperties: false
+    VehicleLocation:
+      type: object
+      properties:
+        latitude:
+          type: integer
+          format: int32
+        longitude:
+          type: integer
+          format: int32
+        precision:
+          type: integer
+          format: int32
+      additionalProperties: false
+    VehicleLocationAtStop:
+      type: object
+      properties:
+        latitude:
+          type: integer
+          format: int32
+        longitude:
+          type: integer
+          format: int32
+        precision:
+          type: integer
+          format: int32
+      additionalProperties: false
+    Vium:
+      type: object
+      properties:
+        viaRef:
+          type: string
+          nullable: true
+        viaName:
+          type: string
+          nullable: true
+      additionalProperties: false
